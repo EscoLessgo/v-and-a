@@ -1,149 +1,79 @@
-# 💌 Love Notes - Daily Messages for Your Special Someone
+# 💌 V and A - Love Notes App
 
-A beautiful, romantic website where you can post daily love notes for your girlfriend. She can visit anytime to read today's message and look back at previous ones.
+A simple, beautiful love notes app for Ashton and Vanessa.
 
-## ✨ Features
+## 🌐 Live Site
 
-- **Stunning Design**: Romantic gradient theme with smooth animations and glassmorphism effects
-- **Today's Message**: Prominently displays the most recent note
-- **Message History**: Collapsible section showing all previous messages
-- **Easy Updates**: Just edit `messages.json` to add new notes
-- **Mobile Responsive**: Looks beautiful on all devices
-- **Interactive**: Floating hearts when clicking on messages
-- **Auto-refresh**: Checks for new messages every 5 minutes
+**URL:** https://vanda.velarixsolutions.nl/app.html
 
-## 🚀 How to Update Daily
+## 👥 Login Credentials
 
-### Method 1: Edit Locally & Push (Recommended)
+- **Ashton**: username `ashton` / password `1125`
+- **Vanessa**: username `vanessa` / password `1125`
 
-1. Open `messages.json` in any text editor
-2. Add your new message at the **top** of the messages array:
-   ```json
-   {
-     "date": "2025-12-09",
-     "text": "Your sweet message here! 💕"
-   },
-   ```
-3. Save the file
-4. Commit and push to GitHub:
-   ```bash
-   git add messages.json
-   git commit -m "Love note for Dec 9"
-   git push
-   ```
-5. Your site will auto-update in ~1 minute!
+## ✨ How to Use
 
-### Method 2: Edit Directly on GitHub
+### Posting a Message:
+1. Log in with your username and password
+2. Click **"✏️ Write a Love Note"**
+3. Type your message
+4. Click **"Send 💕"**
+5. Done! It saves automatically
 
-1. Go to your GitHub repo
-2. Click on `messages.json`
-3. Click the pencil icon (Edit)
-4. Add your new message at the top
-5. Commit changes
-6. Site updates automatically!
+### Reacting to Messages:
+- Click any emoji button (❤️ 💕 🥰 😊 💖 ✨)
+- Your reaction appears instantly
 
-## 📝 Message Format
+### Replying to Messages:
+1. Click **"Reply"** on any message
+2. Type your response
+3. Click **"Send Reply"**
+4. Done!
 
-Each message needs:
-- **date**: Format as `YYYY-MM-DD` (e.g., `2025-12-08`)
-- **text**: Your sweet message (can include emojis!)
+## 🚀 Deployment
 
-**Important**: Always add new messages at the **top** of the array. The most recent message will be shown as "Today's Note".
+The app is deployed on Railway and connected to the custom domain via Cloudflare.
 
-## 🌐 Deployment Instructions
+- **Backend**: Node.js + Express + SQLite
+- **Frontend**: Vanilla HTML/CSS/JavaScript
+- **Database**: SQLite (auto-created on Railway)
+- **Hosting**: Railway
+- **DNS**: Cloudflare
 
-### Option 1: Netlify (Easiest)
+## 🔄 Auto-Updates
 
-1. **Push to GitHub**:
-   ```bash
-   git init
-   git add .
-   git commit -m "Initial commit - Love notes site"
-   git remote add origin YOUR_GITHUB_REPO_URL
-   git push -u origin main
-   ```
+Every push to the `main` branch automatically deploys to Railway.
 
-2. **Deploy on Netlify**:
-   - Go to [netlify.com](https://netlify.com)
-   - Click "Add new site" → "Import an existing project"
-   - Connect to GitHub and select your repo
-   - Build settings:
-     - Build command: (leave empty)
-     - Publish directory: `/` or `.`
-   - Click "Deploy site"
+```bash
+git add .
+git commit -m "Your changes"
+git push origin main
+```
 
-3. **Get your URL**:
-   - Netlify will give you a URL like `random-name-123.netlify.app`
-   - You can customize it in Site settings → Domain management
-   - Share this URL with your girlfriend!
+## 💾 Database
 
-### Option 2: Cloudflare Pages
+All messages, reactions, and replies are stored in a SQLite database on Railway. Data persists automatically.
 
-1. **Push to GitHub** (same as above)
+## 📁 Project Structure
 
-2. **Deploy on Cloudflare**:
-   - Go to [dash.cloudflare.com](https://dash.cloudflare.com)
-   - Pages → "Create a project"
-   - Connect to GitHub and select your repo
-   - Build settings:
-     - Framework preset: None
-     - Build command: (leave empty)
-     - Build output directory: `/`
-   - Click "Save and Deploy"
+```
+├── app.html          # Main application page
+├── app-style.css     # Application styles
+├── app-script.js     # Application logic
+├── server.js         # Backend API server
+├── package.json      # Dependencies
+└── README.md         # This file
+```
 
-3. **Your site will be live** at `your-project.pages.dev`
+## 🛠️ Local Development
 
-## 🔒 Making it Private
+```bash
+npm install
+npm start
+```
 
-### Simple Option: Secret URL
-- Just don't share the URL publicly
-- Use the random subdomain Netlify/Cloudflare gives you
-- Only share it with your girlfriend
-
-### Medium Option: Custom Subdomain
-- Use something non-obvious like `peach-sunrise.netlify.app`
-- Makes it harder to guess
-
-### Advanced Option: Password Protection
-If you want to add a simple password:
-1. Add Cloudflare Access (free for up to 50 users)
-2. Or use Netlify's password protection (paid feature)
-3. Or add a simple client-side password prompt (I can help with this!)
-
-## 🎨 Customization Ideas
-
-- Change colors in `style.css` (look for the `:root` section)
-- Add photos of you two in the background
-- Include a special song that plays when she visits
-- Add a counter showing how many days you've been together
-- Include a photo gallery
-
-## 💡 Tips
-
-- **Consistency**: Try to add a new note every day at the same time
-- **Variety**: Mix sweet messages, funny memories, and reasons you love her
-- **Emojis**: Use emojis to add personality! ❤️💕🥰✨🌟
-- **Length**: Keep messages 1-3 sentences for easy reading
-- **Surprise**: Sometimes add a longer, more detailed message
-
-## 📱 How She Uses It
-
-1. Bookmark the URL on her phone/computer
-2. Visit whenever she wants to read today's message
-3. Click "View Previous Notes" to see the history
-4. Click on messages to see floating hearts! ❤️
-
-## 🛠️ Technical Details
-
-- **Pure HTML/CSS/JavaScript** - No framework needed
-- **No database** - All messages stored in `messages.json`
-- **Static site** - Fast, secure, and free to host
-- **Auto-deploy** - Every push to GitHub updates the live site
-
-## ❤️ Made with Love
-
-This site is a labor of love. Every time you update it, you're creating a digital love letter that she can cherish forever.
+Then open: `http://localhost:3000/app.html`
 
 ---
 
-**Need help?** Feel free to customize this however you want. The code is simple and well-commented!
+**Made with love for V and A** ❤️
