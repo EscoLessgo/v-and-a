@@ -200,6 +200,6 @@ app.delete('/api/messages/:id', (req, res) => {
 
 app.listen(PORT, () => {
     console.log(`\n💌 Love Notes Server Running!\n`);
-    console.log(`   Main Site: http://localhost:${PORT}`);
-    console.log(`   API: http://localhost:${PORT}/api/messages\n`);
+    console.log(`   Port: ${PORT}`);
+    console.log(`   API: /api/messages\n`);
 });
