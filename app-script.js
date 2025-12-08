@@ -1,7 +1,10 @@
 // ==================== STATE ====================
 let currentUser = null;
 let currentDisplayName = null;
-const API_URL = 'http://localhost:3000/api';
+// Auto-detect API URL based on environment
+const API_URL = window.location.hostname === 'localhost'
+    ? 'http://localhost:3000/api'
+    : `${window.location.protocol}//${window.location.host}/api`;
 
 // ==================== LOGIN ====================
 async function handleLogin(event) {
