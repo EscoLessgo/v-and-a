@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For My Love 💌</title>
+    <meta name="description" content="A special place for daily love notes">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <!-- Password Protection Overlay -->
+    <div class="password-overlay" id="passwordOverlay">
+        <div class="password-card">
+            <h2 class="password-title">🔒 Enter Password</h2>
+            <p class="password-subtitle">This is a special place, just for you</p>
+            <input type="password" id="passwordInput" class="password-input" placeholder="Enter password">
+            <button id="passwordSubmit" class="password-button">Unlock ❤️</button>
+            <p class="password-error" id="passwordError"></p>
+        </div>
+    </div>
+
+    <div class="stars"></div>
+
+    <!-- Background Music Player -->
+    <div class="music-player" id="musicPlayer">
+        <button class="music-toggle" id="musicToggle">
+            <span class="music-icon">🎵</span>
+        </button>
+        <audio id="backgroundMusic" loop>
+            <source src="music.mp3" type="audio/mpeg">
+        </audio>
+    </div>
+
+    <div class="container">
+        <header class="header">
+            <h1 class="title">Hi, Beautiful 💌</h1>
+            <p class="subtitle">A little something sweet, just for you</p>
+        </header>
+
+        <main class="main-content">
+            <section class="today-section">
+                <div class="date-badge" id="todayDate">Loading...</div>
+                <div class="message-card today-card">
+                    <div class="card-glow"></div>
+                    <div class="card-content">
+                        <h2 class="card-title">Today's Note</h2>
+                        <p class="message-text" id="todayMessage">Loading your message...</p>
+                        <div class="heart-animation">
+                            <span class="heart">❤️</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Photo Gallery Section -->
+            <section class="gallery-section">
+                <button class="toggle-gallery" id="toggleGallery">
+                    <span>View Our Memories 📸</span>
+                    <svg class="chevron" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                        <path d="M5 7.5L10 12.5L15 7.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                            stroke-linejoin="round" />
+                    </svg>
+                </button>
+
+                <div class="gallery-container" id="galleryContainer">
+                    <div class="gallery-grid" id="galleryGrid">
+                        <!-- Photos will be loaded here -->
+                    </div>
+                </div>
+            </section>
+
+            <section class="history-section">
+                <button class="toggle-history" id="toggleHistory">
+                    <span>View Previous Notes 💌</span>
+                    <svg class="chevron" width="20" height="20" viewBox="0 0 20 20" fill="none">
+                        <path d="M5 7.5L10 12.5L15 7.5" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                            stroke-linejoin="round" />
+                    </svg>
+                </button>
+
+                <div class="history-container" id="historyContainer">
+                    <div class="history-grid" id="historyGrid">
+                        <!-- Previous messages will be loaded here -->
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <footer class="footer">
+            <p>Made with love ❤️</p>
+            <p class="footer-hint">Every moment with you is a treasure</p>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

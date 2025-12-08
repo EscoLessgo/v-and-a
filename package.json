@@ -1,0 +1,20 @@
+{
+  "name": "love-notes",
+  "version": "1.0.0",
+  "description": "A beautiful, romantic website where you can post daily love notes for your girlfriend. She can visit anytime to read today's message and look back at previous ones.",
+  "main": "admin-script.js",
+  "scripts": {
+    "start": "node server.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "better-sqlite3": "^12.5.0",
+    "body-parser": "^2.2.1",
+    "cors": "^2.8.5",
+    "express": "^5.2.1"
+  }
+}
