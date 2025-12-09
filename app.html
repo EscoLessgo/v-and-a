@@ -41,6 +41,47 @@
             </div>
         </header>
 
+
+        <!-- Live Feeds Section -->
+        <div class="live-feeds-section">
+            <div class="feed-grid">
+                <!-- Amsterdam Feed -->
+                <div class="feed-card">
+                    <div class="feed-header">
+                        <h3>🇳🇱 Amsterdam</h3>
+                        <span class="status-badge live">LIVE</span>
+                    </div>
+                    <div class="video-wrapper">
+                        <iframe
+                            src="https://www.youtube.com/embed/R3YNscjcJOk?autoplay=1&mute=1&controls=0&rel=0&modestbranding=1"
+                            title="Amsterdam Live Feed"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                            allowfullscreen>
+                        </iframe>
+                    </div>
+                </div>
+
+                <!-- St. Joseph Feed (Placeholder) -->
+                <div class="feed-card">
+                    <div class="feed-header">
+                        <h3>🇺🇸 St. Joseph</h3>
+                        <span class="status-badge offline">OFFLINE</span>
+                    </div>
+                    <div class="video-placeholder">
+                        <div class="placeholder-content">
+                            <span class="placeholder-icon">📷</span>
+                            <p>Feed Unavailable</p>
+                            <a href="https://truckerguideapp.com/saint-joseph.missouri/type=traffic-cameras?zip=64507&camera_id=583711&radius=3&lat=39.758540&lng=-94.807119"
+                                target="_blank" class="external-feed-link">
+                                View on Trucker Guide ↗
+                            </a>
+                            <small>St. Joseph, MO</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <!-- New Message Form -->
         <div class="new-message-section">
             <button class="toggle-form-btn" id="toggleFormBtn" onclick="toggleForm()">

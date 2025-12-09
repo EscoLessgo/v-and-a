@@ -322,7 +322,8 @@ body {
     font-size: 0.9rem;
     cursor: pointer;
     transition: all 0.3s ease;
-    margin-left: auto; /* Push to the right */
+    margin-left: auto;
+    /* Push to the right */
 }
 
 .delete-btn:hover {
@@ -503,4 +504,129 @@ body {
     display: block;
     max-height: 500px;
     object-fit: contain;
+}
+
+/* ==================== LIVE FEEDS ==================== */
+.live-feeds-section {
+    margin-bottom: 2rem;
+}
+
+.feed-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+}
+
+.feed-card {
+    background: var(--color-surface);
+    border-radius: 16px;
+    border: 2px solid hsla(270, 50%, 75%, 0.3);
+    overflow: hidden;
+    transition: all 0.3s ease;
+}
+
+.feed-card:hover {
+    border-color: var(--color-primary);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+}
+
+.feed-header {
+    padding: 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid hsla(270, 50%, 75%, 0.1);
+}
+
+.feed-header h3 {
+    font-size: 1.1rem;
+    color: var(--color-primary-light);
+    font-weight: 600;
+}
+
+.status-badge {
+    font-size: 0.75rem;
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+}
+
+.status-badge.live {
+    background: #ff4757;
+    color: white;
+    box-shadow: 0 0 8px rgba(255, 71, 87, 0.4);
+    animation: pulse 2s infinite;
+}
+
+.status-badge.offline {
+    background: var(--color-bg);
+    color: var(--color-text-muted);
+    border: 1px solid var(--color-text-muted);
+}
+
+.video-wrapper {
+    position: relative;
+    padding-bottom: 56.25%;
+    /* 16:9 Aspect Ratio */
+    height: 0;
+    overflow: hidden;
+    background: black;
+}
+
+.video-wrapper iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+}
+
+.video-placeholder {
+    aspect-ratio: 16/9;
+    background: var(--color-bg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-text-muted);
+}
+
+.placeholder-content {
+    text-align: center;
+}
+
+.placeholder-icon {
+    font-size: 2rem;
+    display: block;
+    margin-bottom: 0.5rem;
+    opacity: 0.5;
+}
+
+.external-feed-link {
+    display: inline-block;
+    margin: 0.5rem 0;
+    color: var(--color-primary-light);
+    text-decoration: none;
+    font-size: 0.9rem;
+    border-bottom: 1px dashed var(--color-primary);
+}
+
+.external-feed-link:hover {
+    color: var(--color-accent);
+    border-bottom-style: solid;
+}
+
+@keyframes pulse {
+    0% {
+        opacity: 1;
+    }
+
+    50% {
+        opacity: 0.7;
+    }
+
+    100% {
+        opacity: 1;
+    }
 }
