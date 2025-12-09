@@ -245,6 +245,7 @@ function displayMessages(messages) {
                 <button class="emoji-btn" onclick="addReaction(${msg.id}, '💖')">💖</button>
                 <button class="emoji-btn" onclick="addReaction(${msg.id}, '✨')">✨</button>
                 <button class="reply-btn" onclick="toggleReplyForm(${msg.id})">Reply</button>
+                ${msg.author === currentUser ? `<button class="delete-btn" onclick="deleteMessage(${msg.id})">Delete</button>` : ''}
             </div>
             
             ${msg.reactions && msg.reactions.length > 0 ? `
@@ -342,6 +343,28 @@ function formatDate(dateString) {
         day: 'numeric'
     };
     return date.toLocaleDateString('en-US', options);
+}
+
+// ==================== DELETE MESSAGE ====================
+async function deleteMessage(messageId) {
+    if (!confirm('Are you sure you want to delete this note?')) {
+        return;
+    }
+
+    try {
+        const response = await fetch(`${API_URL}/messages/${messageId}`, {
+            method: 'DELETE'
+        });
+
+        if (response.ok) {
+            loadMessages();
+        } else {
+            alert('Failed to delete message.');
+        }
+    } catch (error) {
+        console.error('Error deleting message:', error);
+        alert('Error communicating with server.');
+    }
 }
 
 // Auto-refresh every 30 seconds

@@ -313,6 +313,23 @@ body {
     background: var(--color-primary-light);
 }
 
+.delete-btn {
+    padding: 0.5rem 1rem;
+    background: transparent;
+    border: 1px solid #ff6b6b;
+    border-radius: 8px;
+    color: #ff6b6b;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-left: auto; /* Push to the right */
+}
+
+.delete-btn:hover {
+    background: #ff6b6b;
+    color: white;
+}
+
 .reactions-list {
     display: flex;
     gap: 0.5rem;
