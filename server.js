@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const bodyParser = require('body-parser');
@@ -201,7 +202,7 @@ app.get('/api/messages', (req, res) => {
 });
 
 // Add a new message
-app.post('/api/messages', (req, res) => {
+app.post('/api/messages', async (req, res) => {
     try {
         const { text, author, date, media_url, media_type } = req.body;
 
@@ -213,6 +214,9 @@ app.post('/api/messages', (req, res) => {
         // Pass null if media_url or media_type are undefined/missing
         const result = stmt.run(text, author, date, media_url || null, media_type || null);
 
+        // Send Discord Notification (Non-blocking)
+        sendDiscordNotification(text, author, media_url).catch(err => console.error('Discord Webhook Error:', err));
+
         res.json({
             success: true,
             id: result.lastInsertRowid
@@ -221,6 +225,50 @@ app.post('/api/messages', (req, res) => {
         res.status(500).json({ error: error.message });
     }
 });
+
+// Helper: Send Discord Notification
+async function sendDiscordNotification(text, author, mediaUrl) {
+    const webhookUrl = process.env.DISCORD_WEBHOOK_URL;
+    if (!webhookUrl) return;
+
+    // Capitalize author name
+    const authorName = author.charAt(0).toUpperCase() + author.slice(1);
+
+    // Construct absolute URL for media if present
+    // Assuming the app is deployed, we need the public base URL.
+    // For now, we'll try to use a generic approach or just send the text/file info.
+    // In a real deployed scenario, you'd prepend the domain (e.g., https://myapp.railway.app)
+
+    const embeds = [{
+        title: `💌 New Note from ${authorName}!`,
+        description: text || '(No text content)',
+        color: 16758465, // Pinkish color
+        timestamp: new Date().toISOString(),
+        footer: {
+            text: "Daily Dose Love Notes"
+        }
+    }];
+
+    // If there is media, add it to the embed or content
+    // Note: Discord acts weird with local host URLs, but for production it works if the URL is public.
+    const PUBLIC_URL = process.env.PUBLIC_URL; // User should set this in Railway
+
+    if (mediaUrl && PUBLIC_URL) {
+        const fullMediaUrl = `${PUBLIC_URL}${mediaUrl}`;
+        embeds[0].image = { url: fullMediaUrl };
+    } else if (mediaUrl) {
+        embeds[0].description += `\n\n(See attached media in the app)`;
+    }
+
+    await fetch(webhookUrl, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+            username: "Love Notes Bot",
+            embeds: embeds
+        })
+    });
+}
 
 // Add a reaction to a message
 app.post('/api/reactions', (req, res) => {
