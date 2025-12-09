@@ -48,6 +48,16 @@
             </button>
             <div class="new-message-form" id="newMessageForm" style="display: none;">
                 <textarea id="messageText" placeholder="Write something sweet..." rows="4"></textarea>
+
+                <div class="file-upload-area">
+                    <input type="file" id="mediaInput" accept="image/*,video/*" onchange="handleFileSelect(event)"
+                        style="display: none;">
+                    <button class="upload-btn" onclick="document.getElementById('mediaInput').click()">
+                        📷 Add Photo or Video
+                    </button>
+                    <div id="mediaPreview" class="media-preview"></div>
+                </div>
+
                 <button class="send-btn" onclick="sendMessage()">Send 💕</button>
             </div>
         </div>

@@ -1,6 +1,7 @@
 // ==================== STATE ====================
 let currentUser = null;
 let currentDisplayName = null;
+let selectedFile = null;
 // Auto-detect API URL based on environment
 const API_URL = window.location.hostname === 'localhost'
     ? 'http://localhost:3000/api'
@@ -79,34 +80,110 @@ function toggleForm() {
     form.style.display = isVisible ? 'none' : 'block';
 }
 
+// ==================== FILE HANDLING ====================
+function handleFileSelect(event) {
+    const file = event.target.files[0];
+    if (!file) return;
+
+    selectedFile = file;
+    const previewContainer = document.getElementById('mediaPreview');
+    previewContainer.innerHTML = '';
+
+    if (file.type.startsWith('image/')) {
+        const reader = new FileReader();
+        reader.onload = function (e) {
+            previewContainer.innerHTML = `
+                <div class="preview-item">
+                    <img src="${e.target.result}" alt="Preview" class="preview-img">
+                    <button onclick="clearFileSelection()" class="remove-file-btn">❌</button>
+                </div>
+            `;
+        };
+        reader.readAsDataURL(file);
+    } else if (file.type.startsWith('video/')) {
+        previewContainer.innerHTML = `
+             <div class="preview-item">
+                <span class="file-info">📹 ${file.name} (${formatBytes(file.size)})</span>
+                <button onclick="clearFileSelection()" class="remove-file-btn">❌</button>
+            </div>
+        `;
+    }
+}
+
+function clearFileSelection() {
+    selectedFile = null;
+    document.getElementById('mediaInput').value = '';
+    document.getElementById('mediaPreview').innerHTML = '';
+}
+
+function formatBytes(bytes, decimals = 2) {
+    if (bytes === 0) return '0 Bytes';
+    const k = 1024;
+    const dm = decimals < 0 ? 0 : decimals;
+    const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
+    const i = Math.floor(Math.log(bytes) / Math.log(k));
+    return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
+}
+
 // ==================== SEND MESSAGE ====================
 async function sendMessage() {
     const text = document.getElementById('messageText').value.trim();
+    const sendBtn = document.querySelector('.send-btn');
 
-    if (!text) {
-        alert('Please write a message!');
+    if (!text && !selectedFile) {
+        alert('Please write a message or add a photo/video!');
         return;
     }
 
+    sendBtn.disabled = true;
+    sendBtn.textContent = 'Sending...';
+
+    let mediaUrl = null;
+    let mediaType = null;
+
     try {
+        // Upload file if selected
+        if (selectedFile) {
+            const formData = new FormData();
+            formData.append('file', selectedFile);
+
+            const uploadResponse = await fetch(`${API_URL}/upload`, {
+                method: 'POST',
+                body: formData
+            });
+
+            if (!uploadResponse.ok) throw new Error('File upload failed');
+
+            const uploadData = await uploadResponse.json();
+            mediaUrl = uploadData.fileUrl;
+            mediaType = uploadData.fileType;
+        }
+
+        // Send message
         const response = await fetch(`${API_URL}/messages`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
                 text: text,
                 author: currentUser,
-                date: new Date().toISOString().split('T')[0]
+                date: new Date().toISOString().split('T')[0],
+                media_url: mediaUrl,
+                media_type: mediaType
             })
         });
 
         if (response.ok) {
             document.getElementById('messageText').value = '';
+            clearFileSelection();
             document.getElementById('newMessageForm').style.display = 'none';
             loadMessages();
         }
     } catch (error) {
         console.error('Error sending message:', error);
-        alert('Failed to send message. Make sure the server is running!');
+        alert('Failed to send message: ' + error.message);
+    } finally {
+        sendBtn.disabled = false;
+        sendBtn.textContent = 'Send 💕';
     }
 }
 
@@ -149,7 +226,16 @@ function displayMessages(messages) {
                 <span class="message-date">${formatDate(msg.date)}</span>
             </div>
             
-            <div class="message-text">${msg.text}</div>
+            ${msg.text ? `<div class="message-text">${msg.text}</div>` : ''}
+
+            ${msg.media_url ? `
+                <div class="message-media">
+                    ${msg.media_type && msg.media_type.startsWith('video') ?
+                `<video controls src="${msg.media_url}" class="media-content"></video>` :
+                `<img src="${msg.media_url}" class="media-content" loading="lazy" alt="Love Note Media">`
+            }
+                </div>
+            ` : ''}
             
             <div class="message-actions">
                 <button class="emoji-btn" onclick="addReaction(${msg.id}, '❤️')">❤️</button>
