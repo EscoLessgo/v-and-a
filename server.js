@@ -10,15 +10,30 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 // Initialize database
-const db = new Database('love-notes.db');
+// Use DATA_DIR env var if set (for Railway Volumes), otherwise use current directory
+const DATA_DIR = process.env.DATA_DIR || __dirname;
+
+// Ensure Data Directory exists if it's not the current directory
+if (DATA_DIR !== __dirname && !fs.existsSync(DATA_DIR)) {
+    try {
+        fs.mkdirSync(DATA_DIR, { recursive: true });
+        console.log(`Created data directory: ${DATA_DIR}`);
+    } catch (err) {
+        console.error(`Error creating data directory: ${err.message}`);
+    }
+}
+
+const dbPath = path.join(DATA_DIR, 'love-notes.db');
+const db = new Database(dbPath);
+console.log(`Database stored at: ${dbPath}`);
 
 // Enable WAL mode for better concurrency
 db.pragma('journal_mode = WAL');
 
 // Ensure uploads directory exists
-const uploadDir = path.join(__dirname, 'uploads');
+const uploadDir = path.join(DATA_DIR, 'uploads');
 if (!fs.existsSync(uploadDir)) {
-    fs.mkdirSync(uploadDir);
+    fs.mkdirSync(uploadDir, { recursive: true });
 }
 
 // Configure Multer for file uploads
