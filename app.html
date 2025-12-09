@@ -42,14 +42,23 @@
         </header>
 
 
+        <!-- Security Banner -->
+        <div class="security-banner">
+            <span class="security-icon">🔒</span>
+            <span class="security-text">Secure & Private. Encrypted space for Ashton & Vanessa.</span>
+        </div>
+
         <!-- Live Feeds Section -->
         <div class="live-feeds-section">
             <div class="feed-grid">
                 <!-- Amsterdam Feed -->
                 <div class="feed-card">
                     <div class="feed-header">
-                        <h3>🇳🇱 Amsterdam</h3>
-                        <span class="status-badge live">LIVE</span>
+                        <div class="feed-title-wrapper">
+                            <h3>🇳🇱 Amsterdam</h3>
+                            <span class="status-badge live">LIVE</span>
+                        </div>
+                        <span class="feed-clock" id="clock-amsterdam">Loading...</span>
                     </div>
                     <div class="clickable-feed-wrapper">
                         <a href="https://www.skylinewebcams.com/en/webcam/netherlands/north-holland/amsterdam/amsterdam-dam-square.html"
@@ -65,8 +74,11 @@
                 <!-- St. Joseph Feed -->
                 <div class="feed-card">
                     <div class="feed-header">
-                        <h3>🇺🇸 St. Joseph</h3>
-                        <span class="status-badge live">LIVE</span>
+                        <div class="feed-title-wrapper">
+                            <h3>🇺🇸 St. Joseph</h3>
+                            <span class="status-badge live">LIVE</span>
+                        </div>
+                        <span class="feed-clock" id="clock-stjoseph">Loading...</span>
                     </div>
                     <!-- Custom wrapper for Windy player to ensure aspect ratio -->
                     <div class="video-wrapper">

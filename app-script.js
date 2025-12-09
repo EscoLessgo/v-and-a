@@ -369,3 +369,34 @@ async function deleteMessage(messageId) {
 
 // Auto-refresh every 30 seconds
 setInterval(loadMessages, 30000);
+
+// ==================== CLOCKS ====================
+function updateClocks() {
+    // Amsterdam Time (CET/CEST)
+    const amsterdamEl = document.getElementById('clock-amsterdam');
+    if (amsterdamEl) {
+        const amsterdamTime = new Date().toLocaleTimeString('en-US', {
+            timeZone: 'Europe/Amsterdam',
+            hour: 'numeric',
+            minute: '2-digit',
+            hour12: true
+        });
+        amsterdamEl.textContent = amsterdamTime;
+    }
+
+    // St. Joseph, Missouri Time (Central Time)
+    const stJosephEl = document.getElementById('clock-stjoseph');
+    if (stJosephEl) {
+        const stJosephTime = new Date().toLocaleTimeString('en-US', {
+            timeZone: 'America/Chicago',
+            hour: 'numeric',
+            minute: '2-digit',
+            hour12: true
+        });
+        stJosephEl.textContent = stJosephTime;
+    }
+}
+
+// Update clocks every second
+setInterval(updateClocks, 1000);
+updateClocks(); // Initial call
