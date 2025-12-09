@@ -51,32 +51,33 @@
                         <h3>🇳🇱 Amsterdam</h3>
                         <span class="status-badge live">LIVE</span>
                     </div>
-                    <div class="video-wrapper">
-                        <iframe
-                            src="https://www.youtube.com/embed/R3YNscjcJOk?autoplay=1&mute=1&controls=0&rel=0&modestbranding=1"
-                            title="Amsterdam Live Feed"
-                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                            allowfullscreen>
-                        </iframe>
+                    <div class="clickable-feed-wrapper">
+                        <a href="https://www.skylinewebcams.com/en/webcam/netherlands/north-holland/amsterdam/amsterdam-dam-square.html"
+                            target="_blank">
+                            <img src="https://embed.skylinewebcams.com/img/1794.jpg"
+                                alt="【LIVE】 Amsterdam - Dam Square | SkylineWebcams"
+                                style="width: 100%; height: auto; display: block;">
+                            <div class="overlay-hint">👆 Click to view Live Stream</div>
+                        </a>
                     </div>
                 </div>
 
-                <!-- St. Joseph Feed (Placeholder) -->
+                <!-- St. Joseph Feed -->
                 <div class="feed-card">
                     <div class="feed-header">
                         <h3>🇺🇸 St. Joseph</h3>
-                        <span class="status-badge offline">OFFLINE</span>
+                        <span class="status-badge live">LIVE</span>
                     </div>
-                    <div class="video-placeholder">
-                        <div class="placeholder-content">
-                            <span class="placeholder-icon">📷</span>
-                            <p>Feed Unavailable</p>
-                            <a href="https://truckerguideapp.com/saint-joseph.missouri/type=traffic-cameras?zip=64507&camera_id=583711&radius=3&lat=39.758540&lng=-94.807119"
-                                target="_blank" class="external-feed-link">
-                                View on Trucker Guide ↗
-                            </a>
-                            <small>St. Joseph, MO</small>
-                        </div>
+                    <!-- Custom wrapper for Windy player to ensure aspect ratio -->
+                    <div class="video-wrapper">
+                        <a name="windy-webcam-timelapse-player" data-id="1793877438" data-play="day" data-loop="0"
+                            data-auto-play="1" data-force-full-screen-on-overlay-play="0" data-interactive="1"
+                            href="https://windy.com/webcams/1793877438" target="_blank"
+                            style="display: block; width: 100%; height: 100%; position: absolute; top:0; left: 0;">
+                            Elwood: US-36 W. of Missouri River
+                        </a>
+                        <script async type="text/javascript"
+                            src="https://webcams.windy.com/webcams/public/embed/v2/script/player.js"></script>
                     </div>
                 </div>
             </div>
