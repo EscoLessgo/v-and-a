@@ -84,9 +84,36 @@ Railway will update in 1-2 minutes.
 
 ---
 
-## 💾 Database
-
 All data is stored in SQLite database on Railway. It persists automatically!
+
+---
+
+## 🔔 Discord Webhooks (Optional)
+
+The app supports personalized Discord notifications with mentions!
+
+### How It Works:
+- When **Vanessa** posts a note → Ashton's webhook gets notified with **@tcp.dns** mention
+- When **Ashton** posts a note → Vanessa's webhook gets notified with **@misspufff** mention
+
+### Setup in Railway:
+1. Go to your Railway project
+2. Click **Variables** tab
+3. Add these environment variables:
+   - `DISCORD_WEBHOOK_ASHTON` = `https://canary.discord.com/api/webhooks/1448169963780051038/Eal0_bd1_tTS63GbBU9YfFmdO-aB6sNx65nBFJSvFwoIq9n4oCOFxRDuU0iBDIJnE5FP`
+   - `DISCORD_WEBHOOK_VANESSA` = `https://canary.discord.com/api/webhooks/1447840045263487117/O-s4K1nkK9KooQOIEIte2wiiSiLrF-OiJgHc7FiQ4_WCPuzyUzzPFlXzNFDP7UxwUydn`
+   - `PUBLIC_URL` = Your Railway URL (e.g., `https://v-and-a.up.railway.app`) for media previews
+   - `DISCORD_ID_ASHTON` = Ashton's Discord User ID (tcp.dns)
+   - `DISCORD_ID_VANESSA` = Vanessa's Discord User ID (misspufff)
+
+**Note:** The webhooks are hardcoded as fallbacks, so they'll work even without setting environment variables!
+
+### How to Get Discord User IDs:
+1. Open Discord
+2. Go to **Settings** → **Advanced** → Enable **"Developer Mode"**
+3. Right-click on a user's profile → **"Copy User ID"**
+4. Paste the User ID into the Railway environment variables above
+
 
 ---
 

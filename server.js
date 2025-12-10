@@ -228,17 +228,32 @@ app.post('/api/messages', async (req, res) => {
 
 // Helper: Send Discord Notification
 async function sendDiscordNotification(text, author, mediaUrl) {
-    const webhookUrl = process.env.DISCORD_WEBHOOK_URL;
-    if (!webhookUrl) return;
+    // Webhook URLs for each person
+    // When Vanessa posts, notify Ashton's webhook (and vice versa)
+    const WEBHOOK_ASHTON = process.env.DISCORD_WEBHOOK_ASHTON || 'https://canary.discord.com/api/webhooks/1448169963780051038/Eal0_bd1_tTS63GbBU9YfFmdO-aB6sNx65nBFJSvFwoIq9n4oCOFxRDuU0iBDIJnE5FP';
+    const WEBHOOK_VANESSA = process.env.DISCORD_WEBHOOK_VANESSA || 'https://canary.discord.com/api/webhooks/1447840045263487117/O-s4K1nkK9KooQOIEIte2wiiSiLrF-OiJgHc7FiQ4_WCPuzyUzzPFlXzNFDP7UxwUydn';
 
-    // Capitalize author name
+    // Discord User IDs for proper mentions (format: <@USER_ID>)
+    // To get your Discord User ID: Right-click on user → Copy User ID (requires Developer Mode enabled)
+    const DISCORD_ID_ASHTON = process.env.DISCORD_ID_ASHTON || '1256365134826311751'; // tcp.dns
+    const DISCORD_ID_VANESSA = process.env.DISCORD_ID_VANESSA || '1097715900649582742'; // misspufff
+
+    // Determine recipient based on author
+    // If Vanessa posts, send to Ashton's webhook (mention Ashton)
+    // If Ashton posts, send to Vanessa's webhook (mention Vanessa)
+    const isVanessa = author.toLowerCase() === 'vanessa';
+    const webhookUrl = isVanessa ? WEBHOOK_ASHTON : WEBHOOK_VANESSA;
+
+    // Use proper Discord mention format if user ID is available, otherwise use @username
+    const mentionUser = isVanessa
+        ? (DISCORD_ID_ASHTON ? `<@${DISCORD_ID_ASHTON}>` : '@tcp.dns')
+        : (DISCORD_ID_VANESSA ? `<@${DISCORD_ID_VANESSA}>` : '@misspufff');
+
     const authorName = author.charAt(0).toUpperCase() + author.slice(1);
 
-    // Construct absolute URL for media if present
-    // Assuming the app is deployed, we need the public base URL.
-    // For now, we'll try to use a generic approach or just send the text/file info.
-    // In a real deployed scenario, you'd prepend the domain (e.g., https://myapp.railway.app)
+    if (!webhookUrl) return;
 
+    // Construct embed (without mention in description - mentions don't work in embeds!)
     const embeds = [{
         title: `💌 New Note from ${authorName}!`,
         description: text || '(No text content)',
@@ -249,10 +264,8 @@ async function sendDiscordNotification(text, author, mediaUrl) {
         }
     }];
 
-    // If there is media, add it to the embed or content
-    // Note: Discord acts weird with local host URLs, but for production it works if the URL is public.
-    const PUBLIC_URL = process.env.PUBLIC_URL; // User should set this in Railway
-
+    // Add media if present
+    const PUBLIC_URL = process.env.PUBLIC_URL;
     if (mediaUrl && PUBLIC_URL) {
         const fullMediaUrl = `${PUBLIC_URL}${mediaUrl}`;
         embeds[0].image = { url: fullMediaUrl };
@@ -264,6 +277,7 @@ async function sendDiscordNotification(text, author, mediaUrl) {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
+            content: mentionUser, // Mention must be in content field to trigger notification!
             username: "Love Notes Bot",
             embeds: embeds
         })
